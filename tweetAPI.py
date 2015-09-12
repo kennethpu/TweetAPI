@@ -66,21 +66,21 @@ class TweetAPI:
                 saveFollowersDataToFile(followers_data, file_name)
             return followers_data
 
+    def getOverlappingFollowerIDs(self, *screen_names):
+        """Returns the user ids of twitter users who follow all of the specified usernames
+
+        Arguments:
+          screen_names -- variable length list of twitter users to find overlapping follower ids for 
+        
+        Returns:
+          follower_ids -- list of ids of users who follow ALL of the specified twitter accounts
+        """
+        fid_set_list = [set(self.getFollowerIDs(name)) for name in screen_names]
+        return set.intersection(*fid_set_list)
+
 
 def main():
     api = TweetAPI()
-    api.getFollowerIDs('angrybirds')
-    # wwf_followers = set(api.getFollowerIDs(WWF_SN))
-    # ccs_followers = set(api.getFollowerIDs(CCS_SN))
-    # trc_followers = set(api.getFollowerIDs(TRC_SN))
-
-    # WWF_CCS_followers = wwf_followers & ccs_followers
-    # WWF_TRC_followers = wwf_followers & trc_followers
-    # CCS_TRC_followers = ccs_followers & trc_followers
-    # shared_followers = WWF_CCS_followers & trc_followers
-
-    # print "WWF:%d, CCS:%d, TRC:%d, WWF+CCS:%d, WWF+TRC:%d, CCS+TRC:%d ALL:%d" % \
-    # 	(len(wwf_followers), len(ccs_followers), len(trc_followers), len(WWF_CCS_followers), len(WWF_TRC_followers), len(CCS_TRC_followers), len(shared_followers))
 
 if __name__ == '__main__':
     main()
